@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livro de Receitas — Frutas | Andrea Ramos</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:   #2A1A1F;
+  --mid:   #6B3A45;
+  --light: #AA7880;
+  --red:   #C83040;
+  --red-l: #FAD0D5;
+  --red-p: #FEF2F4;
+  --blue:  #5070B0;
+  --blu-l: #D8E4F8;
+  --blu-p: #F0F4FC;
+  --grn:   #4A7A50;
+  --cream: #FDFAF6;
+  --warm:  #F8F0EC;
+  --sage:  #6A9A6E;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;color:var(--ink);overflow-x:hidden;background:var(--cream)}
+
+/* NAV */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 18px;
+  background:rgba(253,250,246,0.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(200,48,64,0.15);
+}
+.nav-brand{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--ink);line-height:1.2}
+.nav-brand small{display:block;font-size:10px;font-weight:400;color:var(--light);font-family:'Outfit',sans-serif}
+.nav-btn{
+  background:linear-gradient(135deg,var(--red),#A02030);
+  color:#fff;padding:10px 18px;border-radius:50px;
+  font-size:12px;font-weight:600;text-decoration:none;
+  box-shadow:0 4px 14px rgba(200,48,64,0.35);
+  white-space:nowrap;transition:all .25s;
+}
+.nav-btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(200,48,64,.45)}
+
+
+/* FAIXA GRATUITO */
+.free-banner{
+  position:fixed;top:52px;left:0;right:0;z-index:190;
+  background:linear-gradient(135deg,#C83040,#A02030);
+  color:#fff;text-align:center;padding:9px 16px;
+  font-size:12px;font-weight:500;letter-spacing:.02em;
+  box-shadow:0 3px 12px rgba(200,48,64,.4);
+  cursor:pointer;text-decoration:none;display:block;
+  transition:background .2s;
+}
+.free-banner:hover{background:linear-gradient(135deg,#A02030,#800020)}
+.free-banner strong{font-weight:700}
+.free-banner .arr{display:inline-block;margin-left:4px;animation:bDown 1.4s ease-in-out infinite}
+@keyframes bDown{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* HERO */
+.hero{padding:108px 16px 28px;text-align:center;max-width:380px;margin:0 auto}
+.brand-tag{
+  display:inline-block;font-size:10px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--red);background:var(--red-l);
+  padding:5px 16px;border-radius:50px;margin-bottom:16px;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,7vw,46px);font-weight:900;line-height:1.1;margin-bottom:8px;
+}
+.hero h1 em{font-style:italic;color:var(--red)}
+.hero-fruits{font-size:22px;letter-spacing:6px;margin-bottom:12px;opacity:.8}
+.hero-sub{font-size:14px;color:var(--mid);line-height:1.7;font-weight:300;margin-bottom:20px}
+.hero-sub strong{color:var(--ink);font-weight:600}
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:4px}
+.hbadge{
+  font-size:11px;font-weight:500;padding:5px 11px;border-radius:50px;
+  border:1px solid rgba(200,48,64,0.22);
+  color:var(--mid);background:rgba(255,255,255,.88);
+}
+
+/* CARROSSEL */
+.car-outer{max-width:360px;margin:0 auto;padding:8px 16px 24px}
+.car-wrap{
+  position:relative;border-radius:20px;overflow:hidden;
+  aspect-ratio:3/4;
+  box-shadow:0 16px 48px rgba(42,26,31,0.16);
+  background:var(--warm);user-select:none;
+}
+.car-track{display:flex;width:100%;height:100%;transition:transform .42s cubic-bezier(.25,.46,.45,.94)}
+.car-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--warm);position:relative}
+.car-slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.car-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:36px;height:36px;border-radius:50%;border:none;
+  background:rgba(255,255,255,.92);color:var(--ink);
+  font-size:15px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 12px rgba(0,0,0,.1);transition:all .2s;z-index:10;
+}
+.car-btn:hover{background:var(--red);color:#fff}
+.car-btn:disabled{opacity:.2;pointer-events:none}
+.car-prev{left:9px}.car-next{right:9px}
+.car-dots{
+  position:absolute;bottom:11px;left:50%;transform:translateX(-50%);
+  display:flex;gap:5px;z-index:10;
+}
+.car-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5);border:none;cursor:pointer;padding:0;transition:all .22s}
+.car-dot.on{background:#fff;width:20px;border-radius:3px}
+.car-count{position:absolute;top:10px;left:10px;background:rgba(42,26,31,.55);color:#fff;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;z-index:10}
+
+/* INCLUSO */
+.incluso{max-width:360px;margin:0 auto;padding:0 16px 22px}
+.sec-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink);text-align:center;margin-bottom:14px}
+.incluso-list{display:flex;flex-direction:column;gap:8px}
+.inc-item{
+  background:rgba(255,255,255,.92);border:1px solid rgba(200,48,64,.15);
+  border-radius:13px;padding:13px 15px;
+  display:flex;gap:12px;align-items:center;
+}
+.inc-icon{font-size:20px;flex-shrink:0}
+.inc-text{font-size:13px;color:var(--mid);line-height:1.4;font-weight:300}
+.inc-text strong{color:var(--ink);font-weight:600}
+
+/* HUBLA INFO */
+.hubla-box{
+  max-width:360px;margin:0 auto 22px;padding:0 16px;
+}
+.hubla-inner{
+  background:linear-gradient(135deg,#F0F4FC,#FEF2F4);
+  border:1px solid rgba(80,112,176,.2);
+  border-radius:15px;padding:15px 16px;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.hubla-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.hubla-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.hubla-text{font-size:12px;color:var(--mid);line-height:1.55;font-weight:300}
+.hubla-text a{color:var(--red);font-weight:500;text-decoration:none}
+
+/* CTA */
+.cta-section{max-width:360px;margin:0 auto;padding:20px 16px 32px;text-align:center}
+.fruits-div{font-size:18px;letter-spacing:6px;opacity:.4;padding:4px 0 16px}
+.price-box{
+  background:rgba(255,255,255,.96);border:1px solid rgba(200,48,64,.2);
+  border-radius:22px;padding:26px 20px;
+  box-shadow:0 10px 40px rgba(42,26,31,.07);
+}
+.price-tag{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--light);margin-bottom:5px;display:block}
+.price-main{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:var(--ink);line-height:1}
+.price-main sup{font-size:24px;vertical-align:super;color:var(--red)}
+.price-note{font-size:12px;color:var(--light);margin:5px 0 18px;font-weight:300}
+.btn-comprar{
+  display:block;background:linear-gradient(135deg,var(--red),#A02030);
+  color:#fff;padding:16px;border-radius:13px;
+  font-size:15px;font-weight:600;text-decoration:none;
+  box-shadow:0 8px 24px rgba(200,48,64,.35);transition:all .28s;
+}
+.btn-comprar:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(200,48,64,.45)}
+.cta-sub{font-size:11px;color:var(--light);margin-top:10px}
+.garantias{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:16px}
+.gar{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--mid)}
+.gdot{width:5px;height:5px;border-radius:50%;background:var(--sage);flex-shrink:0}
+
+/* OUTROS PRODUTOS */
+.outros{max-width:360px;margin:0 auto;padding:0 16px 24px}
+.outros-grid{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.outro-card{
+  background:rgba(255,255,255,.9);border:1px solid rgba(200,48,64,.15);
+  border-radius:13px;padding:14px 15px;
+  display:flex;align-items:center;gap:12px;text-decoration:none;
+  transition:all .2s;
+}
+.outro-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(42,26,31,.08);border-color:var(--red)}
+.outro-emoji{font-size:24px;flex-shrink:0}
+.outro-info{flex:1}
+.outro-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.outro-desc{font-size:11px;color:var(--light);font-weight:300}
+.outro-arrow{color:var(--red);font-size:14px;font-weight:600}
+
+/* GRATUITOS */
+.gratis-section{max-width:360px;margin:0 auto;padding:0 16px 32px}
+.gratis-divider{
+  display:flex;align-items:center;gap:10px;margin-bottom:18px;
+}
+.gratis-divider::before,.gratis-divider::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,48,64,.25),transparent);
+}
+.gratis-divider-text{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--light);white-space:nowrap}
+.gratis-main{
+  background:linear-gradient(135deg,var(--red-p),#FFF8E0);
+  border:1.5px solid rgba(200,48,64,.25);
+  border-radius:18px;padding:22px 18px;margin-bottom:10px;text-align:center;
+}
+.gratis-tag{
+  display:inline-block;background:linear-gradient(135deg,var(--red),#A02030);
+  color:#fff;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  padding:4px 14px;border-radius:50px;margin-bottom:12px;
+}
+.gratis-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.gratis-title em{font-style:italic;color:var(--red)}
+.gratis-desc{font-size:12px;color:var(--mid);line-height:1.6;font-weight:300;margin-bottom:16px}
+.btn-gratis{
+  display:block;background:#fff;color:var(--red);
+  border:2px solid var(--red);padding:13px;border-radius:11px;
+  font-size:13px;font-weight:700;text-decoration:none;transition:all .22s;
+}
+.btn-gratis:hover{background:var(--red);color:#fff;box-shadow:0 6px 18px rgba(200,48,64,.3);transform:translateY(-2px)}
+.gratis-note{font-size:10px;color:var(--light);margin-top:8px;font-weight:300}
+.btn-mais-gratis{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:rgba(255,255,255,.9);border:1px dashed rgba(200,48,64,.35);
+  border-radius:13px;padding:13px;
+  font-size:13px;font-weight:600;color:var(--red);text-decoration:none;
+  transition:all .22s;
+}
+.btn-mais-gratis:hover{background:var(--red-p);border-style:solid}
+
+/* FAQ */
+.faq-section{max-width:360px;margin:0 auto;padding:0 16px 36px}
+.faq-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;text-align:center;color:var(--ink);margin-bottom:12px}
+.faq-item{background:rgba(255,255,255,.9);border:1px solid rgba(200,48,64,.15);border-radius:12px;margin-bottom:7px;overflow:hidden}
+.faq-q{padding:14px 15px;font-size:13px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--ink);transition:color .2s}
+.faq-q:hover{color:var(--red)}
+.faq-tog{width:22px;height:22px;border-radius:6px;background:var(--red-l);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:all .2s;line-height:1}
+.faq-item.open .faq-tog{background:var(--red);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;font-size:12px;color:var(--mid);line-height:1.7;font-weight:300;padding:0 15px;transition:max-height .35s ease,padding .28s ease}
+.faq-item.open .faq-a{max-height:200px;padding:0 15px 13px}
+
+/* FOOTER */
+footer{background:var(--ink);padding:30px 20px;text-align:center}
+footer p{color:rgba(255,255,255,.35);font-size:12px;line-height:1.8}
+footer strong{color:rgba(255,255,255,.65)}
+footer a{color:rgba(255,255,255,.55);text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    Livro de Receitas — Frutas
+    <small>por Andrea Ramos</small>
+  </div>
+  <a href="#comprar" class="nav-btn">Quero o kit →</a>
+</nav>
+
+<!-- BANNER GRATUITO -->
+<a class="free-banner" href="#gratis">
+  🎁 <strong>Download gratuito disponível!</strong> Clique aqui para ir direto ao final da página <span class="arr">↓</span>
+</a>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="brand-tag">🍓 Novo lançamento</div>
+  <h1>Livro de<br><em>Receitas</em></h1>
+  <div class="hero-fruits">🍒🍓</div>
+  <p class="hero-sub">
+    Kit imprimível completo com <strong>3 temas de frutas</strong>: cereja, mirtilo e morango. Tudo que você precisa para montar um livro de receitas lindo e vender muito!
+  </p>
+  <div class="hero-badges">
+    <span class="hbadge">📄 PDF · PNG · JPG</span>
+    <span class="hbadge">📐 Formato quadrado</span>
+    <span class="hbadge">🎨 3 temas inclusos</span>
+    <span class="hbadge">⚡ Download imediato</span>
+  </div>
+</header>
+
+<!-- CARROSSEL -->
+<div class="car-outer">
+  <div class="car-wrap" id="carWrap">
+    <div class="car-count" id="carCnt">1 / 11</div>
+    <div class="car-track" id="carTrack">
+      <div class="car-slide"><img src="1.jpg" alt="Capa livro de receitas morango — plastificado"></div>
+      <div class="car-slide"><img src="2.jpg" alt="Contra-capa morango"></div>
+      <div class="car-slide"><img src="3.jpg" alt="Detalhe da capa morango"></div>
+      <div class="car-slide"><img src="4.jpg" alt="Capa cereja"></div>
+      <div class="car-slide"><img src="5.jpg" alt="Capa mirtilo"></div>
+      <div class="car-slide"><img src="6.jpg" alt="Páginas internas cereja — capa, nome, separadores"></div>
+      <div class="car-slide"><img src="7.jpg" alt="Páginas internas cereja — guia de medidas e temperatura"></div>
+      <div class="car-slide"><img src="8.jpg" alt="Páginas internas mirtilo — capa, nome, separadores"></div>
+      <div class="car-slide"><img src="9.jpg" alt="Páginas internas mirtilo — guia de medidas e temperatura"></div>
+      <div class="car-slide"><img src="10.jpg" alt="Páginas internas morango — capa, nome, separadores"></div>
+      <div class="car-slide"><img src="11.jpg" alt="Páginas internas morango — guia e miolo"></div>
+    </div>
+    <button class="car-btn car-prev" id="carPrev" onclick="carGo(-1)">&#8592;</button>
+    <button class="car-btn car-next" id="carNext" onclick="carGo(1)">&#8594;</button>
+    <div class="car-dots" id="carDots"></div>
+  </div>
+</div>
+
+<!-- O QUE ESTÁ INCLUSO -->
+<div class="incluso">
+  <h2 class="sec-title">O que está incluso</h2>
+  <div class="incluso-list">
+    <div class="inc-item">
+      <span class="inc-icon">🍓</span>
+      <div class="inc-text"><strong>3 temas completos:</strong> cereja, mirtilo e morango, cada um com identidade visual própria.</div>
+    </div>
+    <div class="inc-item">
+      <span class="inc-icon">📖</span>
+      <div class="inc-text"><strong>Capa e contra-capa</strong> ilustradas para cada tema</div>
+    </div>
+    <div class="inc-item">
+      <span class="inc-icon">✍️</span>
+      <div class="inc-text"><strong>Folha "Esse livro pertence a"</strong> para personalizar com o nome</div>
+    </div>
+    <div class="inc-item">
+      <span class="inc-icon">📏</span>
+      <div class="inc-text"><strong>Guia de medidas e guia de temperatura do forno</strong> </div>
+    </div>
+    <div class="inc-item">
+      <span class="inc-icon">🗂️</span>
+      <div class="inc-text"><strong>Capas separadoras por categoria</strong> (salgadas, doces, massas, etc.)</div>
+    </div>
+    <div class="inc-item">
+      <span class="inc-icon">📝</span>
+      <div class="inc-text"><strong>Miolo para receitas</strong> com campos para nome, ingredientes e modo de preparo</div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO HUBLA -->
+<div class="hubla-box">
+  <div class="hubla-inner">
+    <span class="hubla-icon">🔒</span>
+    <div>
+      <p class="hubla-title">Compra segura via Hubla</p>
+      <p class="hubla-text">A Hubla é a plataforma intermediadora do pagamento: é por meio dela que o download fica disponível de forma <strong>automática e instantânea</strong> após a confirmação. É uma plataforma segura e confiável.<br><br>Algum problema? Me chame no Instagram <a href="https://instagram.com/andrearamos.art" target="_blank">@andrearamos.art</a> 🍓</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="comprar">
+  <div class="fruits-div">🍒 🍓</div>
+  <div class="price-box">
+    <span class="price-tag">Kit completo por apenas</span>
+    <div class="price-main"><sup>R$</sup>14,90</div>
+    <p class="price-note">3 temas · PDF + PNG + JPG · Download imediato</p>
+    <a href="https://pay.hub.la/x8f0uI1JzFhpC2Vp6oX7" class="btn-comprar">🍓 Quero o Livro de Receitas agora →</a>
+    <p class="cta-sub">Pagamento seguro via Hubla · Download automático</p>
+  </div>
+  <div class="garantias">
+    <div class="gar"><div class="gdot"></div>3 temas inclusos</div>
+    <div class="gar"><div class="gdot"></div>Kit completo</div>
+    <div class="gar"><div class="gdot"></div>PDF + PNG + JPG</div>
+    <div class="gar"><div class="gdot"></div>Acesso imediato</div>
+  </div>
+</div>
+
+<!-- OUTROS PRODUTOS -->
+<div class="outros">
+  <h2 class="sec-title">Outros produtos</h2>
+  <div class="outros-grid">
+    <a href="https://ramostakemiya.github.io/miyamaya-paper/" class="outro-card" target="_blank">
+      <span class="outro-emoji">📖</span>
+      <div class="outro-info">
+        <p class="outro-title">Marca página para personalizar</p>
+        <p class="outro-desc">Substitua pelo nome e descrição curta</p>
+      </div>
+      <span class="outro-arrow">→</span>
+    </a>
+    <a href="https://ramostakemiya.github.io/modelosfundoautomatico/" class="outro-card" target="_blank">
+      <span class="outro-emoji">🎀</span>
+      <div class="outro-info">
+        <p class="outro-title">Caixas com fundo automático</p>
+        <p class="outro-desc">Substitua pelo nome e descrição curta</p>
+      </div>
+      <span class="outro-arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- ARQUIVOS GRATUITOS -->
+<div class="gratis-section" id="gratis">
+  <div class="gratis-divider">
+    <span class="gratis-divider-text">arquivos gratuitos</span>
+  </div>
+
+  <!-- BRINDE DESTAQUE: livro de receitas grátis -->
+  <div class="gratis-main">
+    <span class="gratis-tag">🎁 Grátis</span>
+    <h2 class="gratis-title">Experimente o<br><em>Livro de Receitas</em></h2>
+    <p class="gratis-desc">Baixe agora uma amostra gratuita do kit. Sem cadastro, sem pegadinha. Veja a qualidade antes de decidir.</p>
+    <a href="https://drive.google.com/drive/folders/1YwJn7EnW3rptRG4lhr0UQxHFVNYEQGYn?usp=sharing" class="btn-gratis" download>⬇️ Baixar amostra gratuita</a>
+    <p class="gratis-note">PDF · Download direto </p>
+  </div>
+
+  <!-- BOTÃO MAIS GRATUITOS -->
+  <a href="https://drive.google.com/drive/folders/1F3aVPH34PTMCoRdk0-U3vEqpchlaXh-s?usp=sharing" class="btn-mais-gratis" target="_blank">
+    🎁 Ver mais arquivos gratuitos →
+  </a>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <h2 class="faq-title">Dúvidas frequentes</h2>
+
+  <div class="faq-item open">
+    <div class="faq-q" onclick="tFaq(this)">
+      Em que papel devo imprimir?
+      <span class="faq-tog">+</span>
+    </div>
+    <div class="faq-a">Para a capa, recomendo papel fotográfico acima de 180gr. Para as páginas internas, papel sulfite 75g funciona muito bem
+      
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="tFaq(this)">
+      Como posso encadernar o livro?
+      <span class="faq-tog">+</span>
+    </div>
+    <div class="faq-a">O formato quadrado é compatível com argola, espiral, wire-o, encadernação japonesa e até costura artesanal. Você pode levar para uma gráfica ou encadernar em casa com materiais simples. O kit não inclui as peças de encadernação, apenas os arquivos para imprimir.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="tFaq(this)">
+      Posso vender os livros físicos montados?
+      <span class="faq-tog">+</span>
+    </div>
+    <div class="faq-a">Sim! Você pode imprimir, encadernar e vender os livros físicos. Não é permitido revender ou compartilhar os arquivos digitais em si.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="tFaq(this)">
+      Quando recebo os arquivos?
+      <span class="faq-tog">+</span>
+    </div>
+    <div class="faq-a">Imediatamente após a confirmação do pagamento, a Hubla libera o download automaticamente. Você recebe o link direto no e-mail cadastrado.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="tFaq(this)">
+      Tive um problema com o download. O que faço?
+      <span class="faq-tog">+</span>
+    </div>
+    <div class="faq-a">Me chama no Instagram @andrearamos.art com o comprovante da compra e resolvo para você o mais rápido possível!</div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <strong>Andrea Ramos</strong><br>
+    <a href="https://instagram.com/andrearamos.art" target="_blank">@andrearamos.art</a><br>
+    Papelaria digital criativa 🍓🍒🫐
+  </p>
+</footer>
+
+<script>
+function tFaq(el){
+  const item=el.parentElement;
+  const open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!open)item.classList.add('open');
+}
+
+(function(){
+  const track=document.getElementById('carTrack');
+  const dotsEl=document.getElementById('carDots');
+  const cntEl=document.getElementById('carCnt');
+  const prevEl=document.getElementById('carPrev');
+  const nextEl=document.getElementById('carNext');
+  if(!track)return;
+  const slides=track.querySelectorAll('.car-slide');
+  const total=slides.length;
+  let cur=0,startX=0,dragging=false;
+  slides.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='car-dot'+(i===0?' on':'');
+    d.addEventListener('click',()=>goTo(i));
+    dotsEl.appendChild(d);
+  });
+  function update(){
+    track.style.transform=`translateX(-${cur*100}%)`;
+    dotsEl.querySelectorAll('.car-dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+    if(cntEl)cntEl.textContent=(cur+1)+' / '+total;
+    if(prevEl)prevEl.disabled=cur===0;
+    if(nextEl)nextEl.disabled=cur===total-1;
+  }
+  function goTo(i){cur=Math.max(0,Math.min(i,total-1));update();}
+  window.carGo=dir=>goTo(cur+dir);
+  track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;},{passive:true});
+  track.addEventListener('touchend',e=>{
+    const d=startX-e.changedTouches[0].clientX;
+    if(Math.abs(d)>44)goTo(cur+(d>0?1:-1));
+  },{passive:true});
+  track.addEventListener('mousedown',e=>{startX=e.clientX;dragging=true;track.style.cursor='grabbing';});
+  document.addEventListener('mouseup',e=>{
+    if(!dragging)return;
+    dragging=false;track.style.cursor='';
+    const d=startX-e.clientX;
+    if(Math.abs(d)>55)goTo(cur+(d>0?1:-1));
+  });
+  update();
+})();
+</script>
+</body>
+</html>
